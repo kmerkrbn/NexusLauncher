@@ -1,0 +1,42 @@
+<Page x:Class="MClauncher.Views.PlayPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Title="PlayPage"
+      Loaded="Page_Loaded"
+      Background="{DynamicResource ApplicationBackgroundBrush}">
+    <Grid Margin="24">
+        <StackPanel>
+            <TextBlock Text="Launch Game with Mods" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="0,0,0,24" />
+            
+            <ui:Card Padding="24">
+                <StackPanel>
+                    <TextBlock Text="Select Profile:" FontSize="13" FontWeight="Bold" Margin="0,0,0,12" />
+                    <ComboBox Margin="0,0,0,16">
+                        <ComboBoxItem IsSelected="True">Vanilla</ComboBoxItem>
+                        <ComboBoxItem>Survival</ComboBoxItem>
+                        <ComboBoxItem>Creative</ComboBoxItem>
+                        <ComboBoxItem>PvP</ComboBoxItem>
+                    </ComboBox>
+
+                    <TextBlock Text="Game Version:" FontSize="13" FontWeight="Bold" Margin="0,0,0,12" />
+                    <ComboBox Margin="0,0,0,16">
+                        <ComboBoxItem IsSelected="True">1.21</ComboBoxItem>
+                        <ComboBoxItem>1.20.4</ComboBoxItem>
+                        <ComboBoxItem>1.20.1</ComboBoxItem>
+                    </ComboBox>
+
+                    <TextBlock Text="Memory (MB):" FontSize="13" FontWeight="Bold" Margin="0,0,0,12" />
+                    <Slider Minimum="1024" Maximum="8192" Value="4096" Margin="0,0,0,8" />
+                    <TextBlock Text="4096 MB" FontSize="11" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Margin="0,0,0,16" />
+
+                    <ui:Button Content="Launch Game" Appearance="Primary" HorizontalAlignment="Stretch" Padding="14,12" FontSize="13" />
+                </StackPanel>
+            </ui:Card>
+        </StackPanel>
+    </Grid>
+</Page>

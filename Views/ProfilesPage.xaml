@@ -1,0 +1,304 @@
+<Page x:Class="MClauncher.Views.ProfilesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Title="ProfilesPage"
+      Loaded="Page_Loaded"
+      Background="{DynamicResource ApplicationBackgroundBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ══════════════════════════
+             HEADER
+             ══════════════════════════ -->
+        <Border Grid.Row="0" Padding="24,20,24,16" BorderThickness="0,0,0,1">
+            <Border.BorderBrush><SolidColorBrush Color="#1A2040"/></Border.BorderBrush>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Border Width="42" Height="42" CornerRadius="11" Margin="0,0,14,0">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#181008" Offset="0"/>
+                                <GradientStop Color="#281808" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="12" Color="#FF9800" Opacity="0.3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <TextBlock Text="🗂️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Mod Profiles" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="Manage separate game versions with their own mods" FontSize="11" Foreground="#556677" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- New Profile button -->
+                <ui:Button Grid.Column="1" Name="btnNewProfile" Content="+ New Profile"
+                           Appearance="Primary" Padding="16,10" Click="btnNewProfile_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- ══════════════════════════
+             CONTENT
+             ══════════════════════════ -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT: Profile list panel -->
+            <Border Grid.Column="0" BorderThickness="0,0,1,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#0C101E" Offset="0"/>
+                        <GradientStop Color="#080C18" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.BorderBrush><SolidColorBrush Color="#1A2040"/></Border.BorderBrush>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- List header -->
+                    <Border Grid.Row="0" Padding="16,12" BorderThickness="0,0,0,1">
+                        <Border.BorderBrush><SolidColorBrush Color="#1A2040"/></Border.BorderBrush>
+                        <TextBlock Text="YOUR PROFILES" FontSize="9" FontWeight="Bold" Foreground="#334466"/>
+                    </Border>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="12">
+                        <StackPanel Name="profileListContainer">
+                            <TextBlock Name="lbNoProfiles"
+                                       Text="No profiles yet.&#x0a;Click '+ New Profile' to create one."
+                                       FontSize="12" Foreground="#334466"
+                                       TextWrapping="Wrap" TextAlignment="Center" Margin="8,40,8,8"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- RIGHT: Detail / placeholder -->
+            <Grid Grid.Column="1">
+
+                <!-- Placeholder -->
+                <StackPanel Name="noSelectionPanel" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Width="80" Height="80" CornerRadius="20" HorizontalAlignment="Center" Margin="0,0,0,16">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#181008" Offset="0"/>
+                                <GradientStop Color="#281808" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="20" Color="#FF9800" Opacity="0.2" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <TextBlock Text="🗂️" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="Select a Profile" FontSize="16" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Choose a profile from the list to view its details" FontSize="12"
+                               Foreground="#334466" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                </StackPanel>
+
+                <!-- Profile details (hidden by default) -->
+                <ScrollViewer Name="detailScrollViewer" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                    <StackPanel Margin="24" Name="detailPanel">
+
+                        <!-- Profile header row -->
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Icon -->
+                            <Border Grid.Column="0" Width="58" Height="58" CornerRadius="14" Margin="0,0,16,0">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#1a6b30" Offset="0"/>
+                                        <GradientStop Color="#2a9d4a" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="14" Color="#4CAF50" Opacity="0.3" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <TextBlock Name="lbProfileIcon" Text="🎮" FontSize="30"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Name + meta -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Name="lbProfileName" Text="" FontSize="22" FontWeight="Bold" Foreground="White"/>
+                                <TextBlock Name="lbProfileMeta" Text="" FontSize="11" Foreground="#445566" Margin="0,4,0,0"/>
+                            </StackPanel>
+
+                            <!-- Actions -->
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                <ui:Button Name="btnLaunchProfile" Content="▶ Launch" Appearance="Primary"
+                                           Padding="14,9" Click="btnLaunchProfile_Click" Margin="0,0,8,0"/>
+                                <ui:Button Name="btnDeleteProfile" Content="🗑️" Appearance="Secondary"
+                                           Padding="10,8" Click="btnDeleteProfile_Click"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Divider with glow -->
+                        <Border Height="1" Margin="0,0,0,20">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="Transparent" Offset="0"/>
+                                    <GradientStop Color="#2062EFAD" Offset="0.3"/>
+                                    <GradientStop Color="#2062EFAD" Offset="0.7"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <!-- Info stats row -->
+                        <Border CornerRadius="12" Padding="20" Margin="0,0,0,16">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#141826" Offset="0"/>
+                                    <GradientStop Color="#0F1320" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.BorderBrush><SolidColorBrush Color="#1A2040"/></Border.BorderBrush>
+                            <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Game Version" FontSize="9" FontWeight="Bold" Foreground="#334466" Margin="0,0,0,6"/>
+                                    <TextBlock Name="lbDetailVersion" Text="1.21" FontSize="18" FontWeight="Bold" Foreground="#62EFAD"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Mod Loader" FontSize="9" FontWeight="Bold" Foreground="#334466" Margin="0,0,0,6"/>
+                                    <TextBlock Name="lbDetailLoader" Text="Vanilla" FontSize="18" FontWeight="Bold" Foreground="#00B4D8"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Installed Mods" FontSize="9" FontWeight="Bold" Foreground="#334466" Margin="0,0,0,6"/>
+                                    <TextBlock Name="lbDetailModCount" Text="0" FontSize="18" FontWeight="Bold" Foreground="#FF9800"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Installed mods card -->
+                        <Border CornerRadius="12" Padding="20">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#141826" Offset="0"/>
+                                    <GradientStop Color="#0F1320" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.BorderBrush><SolidColorBrush Color="#1A2040"/></Border.BorderBrush>
+                            <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+
+                            <StackPanel>
+                                <Grid Margin="0,0,0,14">
+                                    <TextBlock Text="INSTALLED MODS" FontSize="9" FontWeight="Bold"
+                                               Foreground="#334466" VerticalAlignment="Center"/>
+                                    <ui:Button Name="btnOpenModsForProfile" Content="+ Add Mods"
+                                               HorizontalAlignment="Right" Appearance="Secondary"
+                                               Padding="10,5" FontSize="11"
+                                               Click="btnOpenModsForProfile_Click"/>
+                                </Grid>
+
+                                <StackPanel Name="installedModsList">
+                                    <TextBlock Name="lbNoMods" Text="No mods installed in this profile."
+                                               FontSize="12" Foreground="#334466" Margin="0,8,0,8"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Create Profile Overlay -->
+                <Border Name="createProfileOverlay" Visibility="Collapsed"
+                        Background="#DD000000">
+                    <Border CornerRadius="16" Padding="32" Width="460"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#141826" Offset="0"/>
+                                <GradientStop Color="#0F1320" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#3062EFAD" Offset="0"/>
+                                <GradientStop Color="#30FF9800" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="40" Color="#000000" Opacity="0.6" ShadowDepth="0"/>
+                        </Border.Effect>
+
+                        <StackPanel>
+                            <TextBlock Text="✨ Create New Profile" FontSize="18" FontWeight="Bold"
+                                       Foreground="White" Margin="0,0,0,20"/>
+
+                            <TextBlock Text="Profile Name" FontSize="11" Foreground="#556677" Margin="0,0,0,5"/>
+                            <ui:TextBox Name="tbProfileName" PlaceholderText="e.g. My Fabric 1.21 Pack" Margin="0,0,0,14"/>
+
+                            <TextBlock Text="Description (optional)" FontSize="11" Foreground="#556677" Margin="0,0,0,5"/>
+                            <ui:TextBox Name="tbProfileDesc" PlaceholderText="Describe this profile..." Margin="0,0,0,14"/>
+
+                            <TextBlock Text="Game Version" FontSize="11" Foreground="#556677" Margin="0,0,0,5"/>
+                            <ComboBox Name="cbProfileVersion" SelectedIndex="0" Margin="0,0,0,14"
+                                      Background="#0D1128" BorderBrush="#252D50">
+                                <ComboBoxItem>1.21.4</ComboBoxItem>
+                                <ComboBoxItem>1.21.1</ComboBoxItem>
+                                <ComboBoxItem>1.21</ComboBoxItem>
+                                <ComboBoxItem>1.20.4</ComboBoxItem>
+                                <ComboBoxItem>1.20.1</ComboBoxItem>
+                                <ComboBoxItem>1.19.4</ComboBoxItem>
+                                <ComboBoxItem>1.18.2</ComboBoxItem>
+                                <ComboBoxItem>1.16.5</ComboBoxItem>
+                            </ComboBox>
+
+                            <TextBlock Text="Mod Loader" FontSize="11" Foreground="#556677" Margin="0,0,0,5"/>
+                            <ComboBox Name="cbProfileLoader" SelectedIndex="0" Margin="0,0,0,24"
+                                      Background="#0D1128" BorderBrush="#252D50">
+                                <ComboBoxItem Tag="Vanilla">🎮 Vanilla (No mods)</ComboBoxItem>
+                                <ComboBoxItem Tag="Fabric">🧵 Fabric</ComboBoxItem>
+                                <ComboBoxItem Tag="Forge">⚒️ Forge</ComboBoxItem>
+                                <ComboBoxItem Tag="Quilt">🪡 Quilt</ComboBoxItem>
+                                <ComboBoxItem Tag="NeoForge">🔥 NeoForge</ComboBoxItem>
+                            </ComboBox>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <ui:Button Name="btnCancelCreate" Content="Cancel" Appearance="Secondary"
+                                           Padding="16,9" Click="btnCancelCreate_Click" Margin="0,0,10,0"/>
+                                <ui:Button Name="btnConfirmCreate" Content="✅ Create Profile" Appearance="Primary"
+                                           Padding="16,9" Click="btnConfirmCreate_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

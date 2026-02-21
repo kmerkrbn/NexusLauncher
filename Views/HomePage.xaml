@@ -1,0 +1,667 @@
+﻿<Page x:Class="MClauncher.Views.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MClauncher.Views"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="900" d:DesignWidth="1200"
+      Title="HomePage"
+      Loaded="UiPage_Loaded"
+      Background="{DynamicResource ApplicationBackgroundBrush}">
+
+    <Page.Resources>
+        <!-- Quick action hover style -->
+        <Style x:Key="QuickActionStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- Server pill style -->
+        <Style x:Key="ServerPillStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <!-- ══════════════════════════════
+                 HERO BANNER
+                 ══════════════════════════════ -->
+            <Grid Height="240">
+                <!-- Background gradient -->
+                <Border>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#06091A" Offset="0"/>
+                            <GradientStop Color="#0B1E38" Offset="0.35"/>
+                            <GradientStop Color="#071A10" Offset="0.7"/>
+                            <GradientStop Color="#10082A" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <!-- Decorative glows -->
+                <Ellipse Width="500" Height="350" HorizontalAlignment="Left" Margin="-200,0,0,0" Opacity="0.10">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#00B4D8" Offset="0"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse Width="550" Height="400" HorizontalAlignment="Right" Margin="0,0,-200,0" Opacity="0.10">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#7C4DFF" Offset="0"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse Width="300" Height="300" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-80,0,0" Opacity="0.08">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#4CAF50" Offset="0"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <!-- Stars canvas -->
+                <Canvas>
+                    <Ellipse Canvas.Left="60"   Canvas.Top="25"  Width="2" Height="2" Fill="White" Opacity="0.5"/>
+                    <Ellipse Canvas.Left="220"  Canvas.Top="18"  Width="3" Height="3" Fill="White" Opacity="0.35"/>
+                    <Ellipse Canvas.Left="400"  Canvas.Top="50"  Width="2" Height="2" Fill="White" Opacity="0.45"/>
+                    <Ellipse Canvas.Left="600"  Canvas.Top="12"  Width="2" Height="2" Fill="White" Opacity="0.3"/>
+                    <Ellipse Canvas.Left="780"  Canvas.Top="40"  Width="3" Height="3" Fill="White" Opacity="0.4"/>
+                    <Ellipse Canvas.Left="950"  Canvas.Top="22"  Width="2" Height="2" Fill="White" Opacity="0.55"/>
+                    <Ellipse Canvas.Left="1100" Canvas.Top="60"  Width="2" Height="2" Fill="White" Opacity="0.35"/>
+                </Canvas>
+
+                <!-- Hero content -->
+                <Grid Margin="32,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <!-- Badge -->
+                        <Border Background="#1562EFAD" BorderBrush="#4062EFAD" BorderThickness="1"
+                                CornerRadius="20" Padding="14,5" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,14">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⚡" FontSize="10" Margin="0,0,4,0"/>
+                                <TextBlock Text="NEXUS LAUNCHER v1.0.3  —  Minecraft Ready" 
+                                           FontSize="10" FontWeight="Bold" Foreground="#62EFAD"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Welcome -->
+                        <TextBlock x:Name="lbWelcome" Text="Welcome Back!" 
+                                   FontSize="38" FontWeight="Black" Foreground="White" Margin="0,0,0,8">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="20" Color="#00B4D8" Opacity="0.35" ShadowDepth="0"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <!-- Status -->
+                        <TextBlock x:Name="lbSessionType" Text="Offline Mode" FontSize="13" Margin="0,0,0,22">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#62EFAD" Offset="0"/>
+                                    <GradientStop Color="#00B4D8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+
+                        <!-- Action buttons -->
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Button x:Name="btnLogout" Content="Logout" Appearance="Secondary" 
+                                       Padding="18,10" Click="btnLogout_Click" Margin="0,0,10,0" FontSize="12"/>
+                            <Border Background="#2062EFAD" BorderBrush="#4062EFAD" BorderThickness="1"
+                                    CornerRadius="8" Padding="14,10"
+                                    Cursor="Hand" MouseLeftButtonDown="btnOpenSite_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🌐" FontSize="12" Margin="0,0,6,0"/>
+                                    <TextBlock Text="minecraft.net" FontSize="12" Foreground="#62EFAD" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Decorative Minecraft blocks -->
+                    <Grid Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="0,0,10,0">
+                                <Border Background="#221a4020" BorderBrush="#404CAF50" BorderThickness="2"
+                                        CornerRadius="12" Width="62" Height="62" Margin="0,0,0,8">
+                                    <TextBlock Text="🌿" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Background="#22001050" BorderBrush="#407C4DFF" BorderThickness="2"
+                                        CornerRadius="12" Width="62" Height="62">
+                                    <TextBlock Text="💎" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Margin="0,18,0,0">
+                                <Border Background="#22002050" BorderBrush="#400078D4" BorderThickness="2"
+                                        CornerRadius="12" Width="62" Height="62" Margin="0,0,0,8">
+                                    <TextBlock Text="⚔️" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Background="#22201000" BorderBrush="#40FF9800" BorderThickness="2"
+                                        CornerRadius="12" Width="62" Height="62">
+                                    <TextBlock Text="🔥" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <!-- Bottom fade -->
+                <Border VerticalAlignment="Bottom" Height="60">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="{DynamicResource ApplicationBackgroundColor}" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+            </Grid>
+
+            <!-- ══════════════════════════════
+                 QUICK ACTIONS
+                 ══════════════════════════════ -->
+            <Grid Margin="24,4,24,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Quick Launch -->
+                <Border Grid.Column="0" Style="{StaticResource QuickActionStyle}" Margin="0,0,10,0"
+                        MouseLeftButtonDown="btnQuickLaunch_Click" x:Name="qaLaunch">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1a3825" Offset="0"/>
+                            <GradientStop Color="#0d1f14" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#2F62EFAD"/></Border.BorderBrush>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#2562EFAD" CornerRadius="9" Width="38" Height="38" Margin="0,0,12,0">
+                            <TextBlock Text="▶" FontSize="16" Foreground="#62EFAD" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Quick Launch" FontSize="12" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock x:Name="lbLastVersion" Text="Last version" FontSize="10" Foreground="#556677"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Game Folder -->
+                <Border Grid.Column="1" Style="{StaticResource QuickActionStyle}" Margin="0,0,10,0"
+                        MouseLeftButtonDown="btnOpenFolder_Click">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1a2030" Offset="0"/>
+                            <GradientStop Color="#0d141f" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#2500B4D8"/></Border.BorderBrush>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#2000B4D8" CornerRadius="9" Width="38" Height="38" Margin="0,0,12,0">
+                            <TextBlock Text="📁" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Game Folder" FontSize="12" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text=".minecraft" FontSize="10" Foreground="#556677"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Copy Logs -->
+                <Border Grid.Column="2" Style="{StaticResource QuickActionStyle}" Margin="0,0,10,0"
+                        MouseLeftButtonDown="btnCopyLogs_Click">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1e1a30" Offset="0"/>
+                            <GradientStop Color="#120d1f" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#257C4DFF"/></Border.BorderBrush>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#207C4DFF" CornerRadius="9" Width="38" Height="38" Margin="0,0,12,0">
+                            <TextBlock Text="📋" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Copy Logs" FontSize="12" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="To clipboard" FontSize="10" Foreground="#556677"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Minecraft.net -->
+                <Border Grid.Column="3" Style="{StaticResource QuickActionStyle}"
+                        MouseLeftButtonDown="btnOpenSite_Click">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#20180a" Offset="0"/>
+                            <GradientStop Color="#14100a" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#25FF9800"/></Border.BorderBrush>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#20FF9800" CornerRadius="9" Width="38" Height="38" Margin="0,0,12,0">
+                            <TextBlock Text="🌐" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Minecraft.net" FontSize="12" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock Text="Official site" FontSize="10" Foreground="#556677"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- ══════════════════════════════
+                 LAUNCH BAR
+                 ══════════════════════════════ -->
+            <Grid Margin="24,0,24,20">
+                <Border CornerRadius="16" Padding="24,18">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#131927" Offset="0"/>
+                            <GradientStop Color="#0F1422" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#3062EFAD" Offset="0"/>
+                            <GradientStop Color="#300078D4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="28" Color="#62EFAD" Opacity="0.06" ShadowDepth="0"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,18,0">
+                            <TextBlock Text="GAME VERSION" FontSize="9" FontWeight="Bold" Foreground="#62EFAD" Margin="0,0,0,4"/>
+                            <TextBlock x:Name="lbStatus" Text="Ready to launch" FontSize="13" FontWeight="SemiBold" Foreground="White"/>
+                        </StackPanel>
+
+                        <ComboBox x:Name="cbVersions" Grid.Column="1" VerticalAlignment="Center" 
+                                  Padding="12,10" Margin="0,0,16,0"
+                                  Background="#0D1128" BorderBrush="#252D50"/>
+
+                        <!-- Version type filter -->
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,16,0">
+                            <Border x:Name="filterRelease" Background="#2562EFAD" BorderBrush="#5062EFAD" BorderThickness="1"
+                                    CornerRadius="6" Padding="10,6" Cursor="Hand" Margin="0,0,6,0"
+                                    MouseLeftButtonDown="FilterRelease_Click">
+                                <TextBlock Text="Release" FontSize="10" FontWeight="Bold" Foreground="#62EFAD"/>
+                            </Border>
+                            <Border x:Name="filterSnapshot" Background="#10FFFFFF" BorderBrush="#18FFFFFF" BorderThickness="1"
+                                    CornerRadius="6" Padding="10,6" Cursor="Hand"
+                                    MouseLeftButtonDown="FilterSnapshot_Click">
+                                <TextBlock Text="Snapshot" FontSize="10" FontWeight="SemiBold" Foreground="#667799"/>
+                            </Border>
+                        </StackPanel>
+
+                        <ProgressBar x:Name="pbProgress" Grid.Column="3" Width="120" Height="4" 
+                                     VerticalAlignment="Center" Margin="0,0,16,0"
+                                     Foreground="#62EFAD"/>
+
+                        <ui:Button Grid.Column="4" x:Name="btnRefresh" Content="Refresh" 
+                                   Appearance="Secondary" Padding="14,10" Click="btnRefresh_Click" 
+                                   Margin="0,0,12,0" FontSize="12">
+                            <ui:Button.Icon>
+                                <ui:SymbolIcon Symbol="ArrowSync24"/>
+                            </ui:Button.Icon>
+                        </ui:Button>
+
+                        <!-- LAUNCH button -->
+                        <Button Grid.Column="5" x:Name="btnLaunch" Click="btnLaunch_Click"
+                                HorizontalAlignment="Right" Background="Transparent" 
+                                BorderThickness="0" Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="launchBorder" CornerRadius="12" Padding="26,13">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="#1a6b30" Offset="0"/>
+                                                <GradientStop Color="#2a9d4a" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="20" Color="#4CAF50" Opacity="0.5" ShadowDepth="0"/>
+                                        </Border.Effect>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="▶" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Text="LAUNCH GAME" FontSize="13" FontWeight="Black" Foreground="White"/>
+                                                <TextBlock Text="Click to Play" FontSize="9" Foreground="#A8F0BC" Margin="0,2,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="MouseOver">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="launchBorder"
+                                                                         Storyboard.TargetProperty="Opacity"
+                                                                         To="0.82" Duration="0:0:0.12"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ══════════════════════════════
+                 STAT CARDS ROW
+                 ══════════════════════════════ -->
+            <Grid Margin="24,0,24,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Play Time -->
+                <Border Grid.Column="0" CornerRadius="14" Padding="20" Margin="0,0,12,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#141A2E" Offset="0"/>
+                            <GradientStop Color="#0F1520" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#20446688"/></Border.BorderBrush>
+                    <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+                    <StackPanel>
+                        <Border Background="#1500B4D8" CornerRadius="8" Width="44" Height="44" HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <TextBlock Text="⏱️" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Play Time" FontSize="11" Foreground="#667799"/>
+                        <TextBlock x:Name="lbPlayTime" Text="0h 0m" FontSize="22" FontWeight="Bold" Foreground="#00B4D8" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Versions -->
+                <Border Grid.Column="1" CornerRadius="14" Padding="20" Margin="0,0,12,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#141A2E" Offset="0"/>
+                            <GradientStop Color="#0F1520" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#2044AA44"/></Border.BorderBrush>
+                    <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+                    <StackPanel>
+                        <Border Background="#1562EFAD" CornerRadius="8" Width="44" Height="44" HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <TextBlock Text="📦" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Versions" FontSize="11" Foreground="#667799"/>
+                        <TextBlock x:Name="lbVersionCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="#62EFAD" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Last Played -->
+                <Border Grid.Column="2" CornerRadius="14" Padding="20" Margin="0,0,12,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#141A2E" Offset="0"/>
+                            <GradientStop Color="#0F1520" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#20AA7744"/></Border.BorderBrush>
+                    <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+                    <StackPanel>
+                        <Border Background="#15FF9800" CornerRadius="8" Width="44" Height="44" HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <TextBlock Text="🕐" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Last Played" FontSize="11" Foreground="#667799"/>
+                        <TextBlock x:Name="lbLastPlayed" Text="Today" FontSize="22" FontWeight="Bold" Foreground="#FF9800" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Performance -->
+                <Border Grid.Column="3" CornerRadius="14" Padding="20">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#141A2E" Offset="0"/>
+                            <GradientStop Color="#0F1520" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#204CAF50"/></Border.BorderBrush>
+                    <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+                    <StackPanel>
+                        <Border Background="#154CAF50" CornerRadius="8" Width="44" Height="44" HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <TextBlock Text="⚡" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Performance" FontSize="11" Foreground="#667799"/>
+                        <TextBlock x:Name="lbPerformance" Text="Excellent" FontSize="22" FontWeight="Bold" Foreground="#4CAF50" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- ══════════════════════════════
+                 INFO ROW: Featured + System Status
+                 ══════════════════════════════ -->
+            <Grid Margin="24,0,24,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Featured Minecraft Banner -->
+                <Border Grid.Column="0" CornerRadius="16" Margin="0,0,16,0" ClipToBounds="True" Height="200">
+                    <Grid>
+                        <Border>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#0a1525" Offset="0"/>
+                                    <GradientStop Color="#0d2a0d" Offset="0.6"/>
+                                    <GradientStop Color="#150a25" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Ellipse Width="300" Height="300" HorizontalAlignment="Right" Margin="0,0,-80,-40" Opacity="0.15">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="#4CAF50" Offset="0"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <Grid Margin="26">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <Border Background="#204CAF50" BorderBrush="#404CAF50" BorderThickness="1"
+                                        CornerRadius="20" Padding="10,4" Width="130" HorizontalAlignment="Left" Margin="0,0,0,10">
+                                    <TextBlock Text="🔥 LATEST UPDATE" FontSize="9" FontWeight="Bold" Foreground="#62EFAD"/>
+                                </Border>
+                                <TextBlock Text="Minecraft 1.21.4" FontSize="26" FontWeight="Black" Foreground="White" Margin="0,0,0,4">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="10" Color="#4CAF50" Opacity="0.4" ShadowDepth="0"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock Text="The Garden Awakens" FontSize="13" Foreground="#A0C880" Margin="0,0,0,10"/>
+                                <TextBlock Text="Pale Garden biome, Creaking mob, pale oak wood and more!" 
+                                           FontSize="11" Foreground="#6688AA" TextWrapping="Wrap" MaxWidth="340" Margin="0,0,0,14"/>
+                                <Border Background="#2062EFAD" BorderBrush="#4062EFAD" BorderThickness="1"
+                                        CornerRadius="8" Padding="12,7" HorizontalAlignment="Left" Cursor="Hand"
+                                        MouseLeftButtonDown="btnLearnMore_Click">
+                                    <TextBlock Text="🔗 Learn More on Minecraft.net" FontSize="11" Foreground="#62EFAD" FontWeight="SemiBold"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0,0,0">
+                                <Border Background="#1A4CAF50" BorderBrush="#304CAF50" BorderThickness="1"
+                                        CornerRadius="10" Padding="12" Margin="0,0,0,8">
+                                    <TextBlock Text="🌲" FontSize="28" HorizontalAlignment="Center"/>
+                                </Border>
+                                <Border Background="#1A0078D4" BorderBrush="#300078D4" BorderThickness="1"
+                                        CornerRadius="10" Padding="12">
+                                    <TextBlock Text="👻" FontSize="28" HorizontalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- System Status Card -->
+                <Border Grid.Column="1" CornerRadius="16">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#141826" Offset="0"/>
+                            <GradientStop Color="#0F1320" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush><SolidColorBrush Color="#202030"/></Border.BorderBrush>
+                    <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+
+                    <StackPanel Margin="20">
+                        <TextBlock Text="SYSTEM STATUS" FontSize="9" FontWeight="Bold" Foreground="#445566" Margin="0,0,0,14"/>
+
+                        <!-- RAM -->
+                        <StackPanel Margin="0,0,0,14">
+                            <Grid Margin="0,0,0,6">
+                                <TextBlock Text="💾 RAM Allocation" FontSize="12" FontWeight="SemiBold" Foreground="#99AABB"/>
+                                <TextBlock x:Name="lbRAM" Text="2048 MB" FontSize="11" Foreground="#62EFAD" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Border CornerRadius="3" Height="5" Background="#12FFFFFF">
+                                <ProgressBar x:Name="pbRAM" Value="60" Height="5" Foreground="#62EFAD"
+                                             Background="Transparent" BorderThickness="0"/>
+                            </Border>
+                        </StackPanel>
+
+                        <Border Height="1" Background="#10FFFFFF" Margin="0,0,0,14"/>
+
+                        <!-- Java -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Border Background="#154CAF50" CornerRadius="6" Padding="6" Margin="0,0,10,0">
+                                <TextBlock Text="☕" FontSize="14"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Java Runtime" FontSize="11" Foreground="#667799"/>
+                                <TextBlock x:Name="lbJavaVersion" Text="Checking..." FontSize="12" FontWeight="SemiBold" Foreground="#4CAF50"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Mojang Servers -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Border Background="#15FF9800" CornerRadius="6" Padding="6" Margin="0,0,10,0">
+                                <TextBlock Text="🌐" FontSize="14"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Mojang Servers" FontSize="11" Foreground="#667799"/>
+                                <TextBlock x:Name="lbServerStatus" Text="Checking..." FontSize="12" FontWeight="SemiBold" Foreground="#FF9800"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- System -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Border Background="#150078D4" CornerRadius="6" Padding="6" Margin="0,0,10,0">
+                                <TextBlock Text="🖥️" FontSize="14"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="System" FontSize="11" Foreground="#667799"/>
+                                <TextBlock x:Name="lbSystemStatus" Text="All systems ready" FontSize="12" FontWeight="SemiBold" Foreground="#4CAF50"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Launcher -->
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#157C4DFF" CornerRadius="6" Padding="6" Margin="0,0,10,0">
+                                <TextBlock Text="🚀" FontSize="14"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Launcher" FontSize="11" Foreground="#667799"/>
+                                <TextBlock Text="✅ Nexus v1.0.3" FontSize="12" FontWeight="SemiBold" Foreground="#62EFAD"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- ══════════════════════════════
+                 LIVE MINECRAFT NEWS
+                 ══════════════════════════════ -->
+            <Border Margin="24,0,24,24" CornerRadius="16" Padding="24">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#141826" Offset="0"/>
+                        <GradientStop Color="#0F1320" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.BorderBrush><SolidColorBrush Color="#202030"/></Border.BorderBrush>
+                <Border.BorderThickness><Thickness>1</Thickness></Border.BorderThickness>
+
+                <StackPanel>
+                    <!-- Header -->
+                    <Grid Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="📰" FontSize="18" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Minecraft News" FontSize="16" FontWeight="Bold" 
+                                       Foreground="White" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                            <Border x:Name="NewsLiveTag" Background="#1562EFAD" BorderBrush="#3062EFAD" BorderThickness="1"
+                                    CornerRadius="10" Padding="8,3" VerticalAlignment="Center">
+                                <TextBlock Text="● LIVE" FontSize="9" FontWeight="Bold" Foreground="#62EFAD"/>
+                            </Border>
+                        </StackPanel>
+                        <Border HorizontalAlignment="Right" Background="#1562EFAD" BorderBrush="#3062EFAD" BorderThickness="1"
+                                CornerRadius="6" Padding="10,5" Cursor="Hand" MouseLeftButtonDown="btnViewAllNews_Click">
+                            <TextBlock Text="View All on Minecraft.net →" FontSize="11" Foreground="#62EFAD"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Loading indicator -->
+                    <ProgressBar x:Name="NewsLoadingBar" IsIndeterminate="True" Height="2" Margin="0,0,0,14"
+                                 Foreground="#62EFAD" Visibility="Visible"/>
+
+                    <!-- Error text -->
+                    <TextBlock x:Name="NewsErrorText" Text="" FontSize="12" Foreground="#FF9800" 
+                               Margin="0,0,0,8" Visibility="Collapsed" TextWrapping="Wrap"/>
+
+                    <!-- News cards in 3-column grid -->
+                    <ItemsControl x:Name="NewsContainer">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

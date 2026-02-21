@@ -1,0 +1,156 @@
+<Page x:Class="MClauncher.Views.ModsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1300"
+      Title="ModsPage"
+      Loaded="Page_Loaded"
+      Background="{DynamicResource ApplicationBackgroundBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /><!-- Header/Search -->
+            <RowDefinition Height="Auto" /><!-- Category chips -->
+            <RowDefinition Height="*"    /><!-- Content -->
+        </Grid.RowDefinitions>
+
+        <!-- ═══════════════════════════════════
+             HEADER  ─  gradient banner + search
+             ═══════════════════════════════════ -->
+        <Grid Grid.Row="0">
+            <!-- Gradient background -->
+            <Border Height="140">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1a1035" Offset="0"/>
+                        <GradientStop Color="#0d2744" Offset="0.5"/>
+                        <GradientStop Color="#0a3020" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <!-- Content over gradient -->
+            <Grid Margin="24,16,24,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title row -->
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="📦 Mods Marketplace" FontSize="26" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Name="lbProfileContext" Text="Browse and install mods from Modrinth" FontSize="11" Foreground="#AAEEFF" Margin="0,2,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <ui:Button Name="btnInstalled" Content="📋 Installed" Appearance="Secondary" Padding="14,8" Click="btnInstalled_Click" Margin="0,0,8,0"/>
+                        <ui:Button Name="btnClearSearch" Content="✖ Clear" Appearance="Secondary" Padding="10,8" Click="btnClearSearch_Click" Visibility="Collapsed"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Search row -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBox Name="searchBox" Grid.Column="0" PlaceholderText="🔍 Search mods... (e.g. Sodium, JEI, Waystones)" 
+                                Margin="0,0,10,0" KeyDown="searchBox_KeyDown"/>
+                    <ComboBox Name="cbGameVersion" Grid.Column="1" SelectedIndex="0" Margin="0,0,10,0">
+                        <ComboBoxItem>1.21.4</ComboBoxItem>
+                        <ComboBoxItem>1.21.1</ComboBoxItem>
+                        <ComboBoxItem>1.21</ComboBoxItem>
+                        <ComboBoxItem>1.20.4</ComboBoxItem>
+                        <ComboBoxItem>1.20.1</ComboBoxItem>
+                        <ComboBoxItem>1.19.4</ComboBoxItem>
+                        <ComboBoxItem>1.18.2</ComboBoxItem>
+                        <ComboBoxItem>1.16.5</ComboBoxItem>
+                        <ComboBoxItem>Any</ComboBoxItem>
+                    </ComboBox>
+                    <ui:Button Name="btnSearch" Grid.Column="2" Content="🔎 Search" Appearance="Primary" Padding="16,8" Click="btnSearch_Click"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!-- ═══════════════════════════════════
+             CATEGORY CHIPS
+             ═══════════════════════════════════ -->
+        <Border Grid.Row="1" Padding="24,10,24,10" 
+                Background="{DynamicResource LayerFillColorAltBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" BorderThickness="0,0,0,1">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <StackPanel Orientation="Horizontal" Name="categoryChipsPanel">
+                    <!-- Chips are added in code-behind -->
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- ═══════════════════════════════════
+             MAIN CONTENT: list + details panel
+             ═══════════════════════════════════ -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="340"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ── Left: Mod list ── -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="20">
+                    <StackPanel Name="modsContainer">
+                        <!-- Welcome state -->
+                        <StackPanel Name="welcomePanel" HorizontalAlignment="Center" Margin="0,40,0,0">
+                            <TextBlock Text="📦" FontSize="64" HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                            <TextBlock Text="Discover Mods" FontSize="20" FontWeight="Bold" 
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Search above or click a category to browse mods" FontSize="12"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" Margin="0,6,0,24"/>
+
+                            <!-- Popular picks -->
+                            <TextBlock Text="⚡ Quick Searches" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                            <WrapPanel HorizontalAlignment="Center" Name="quickSearchPanel"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Status bar -->
+                <Border Grid.Row="1" Padding="20,8,20,8" 
+                        Background="{DynamicResource LayerFillColorAltBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" BorderThickness="0,1,0,0">
+                    <Grid>
+                        <TextBlock Name="lbStatus" Text="Ready" FontSize="11" 
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center"/>
+                        <ProgressBar Name="pbDownload" HorizontalAlignment="Right" Width="140" Height="4" 
+                                     VerticalAlignment="Center" Visibility="Collapsed"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ── Right: Details panel ── -->
+            <Border Grid.Column="1" Background="{DynamicResource LayerFillColorAltBrush}" 
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Name="detailsPanel" Margin="16">
+                        <TextBlock Text="Select a mod to see details" FontSize="12" 
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" 
+                                   TextAlignment="Center" Margin="0,60,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

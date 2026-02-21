@@ -1,0 +1,303 @@
+<Page x:Class="MClauncher.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MClauncher.Views"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1400"
+      Title="MainPage"
+      Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <!-- Base nav item style -->
+        <Style x:Key="NavItemStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="navBorder" CornerRadius="10" Padding="12,10"
+                                Background="Transparent">
+                            <Grid>
+                                <!-- Active indicator bar -->
+                                <Border x:Name="activeBar" Width="3" HorizontalAlignment="Left"
+                                        CornerRadius="0,2,2,0" Margin="-12,0,0,0"
+                                        Opacity="0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#62EFAD" Offset="0"/>
+                                            <GradientStop Color="#00B4D8" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <ContentPresenter Margin="12,0,0,0"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="navBorder" Property="Background" Value="#10FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="navBorder" Property="Background" Value="#18FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ══════════════════════════════
+             SIDEBAR
+             ══════════════════════════════ -->
+        <Border Grid.Column="0" BorderThickness="0,0,1,0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#080C18" Offset="0"/>
+                    <GradientStop Color="#060A14" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2062EFAD" Offset="0"/>
+                    <GradientStop Color="#101A2040" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Logo / Brand -->
+                <Border Grid.Row="0" Padding="20,20,20,16" BorderThickness="0,0,0,1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="#2062EFAD" Offset="0.5"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="40" Height="40" CornerRadius="11" Margin="0,0,12,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#1a6b30" Offset="0"/>
+                                    <GradientStop Color="#2a9d4a" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" Color="#4CAF50" Opacity="0.5" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Text="N" FontSize="22" FontWeight="Black" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="NEXUS" FontSize="16" FontWeight="Black" Foreground="White" LineHeight="18"/>
+                            <TextBlock Text="LAUNCHER" FontSize="8" FontWeight="Bold" Margin="0,1,0,0" LineHeight="10">
+                                <TextBlock.Foreground>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#62EFAD" Offset="0"/>
+                                        <GradientStop Color="#00B4D8" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Nav Items -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,8,0,8">
+                    <StackPanel Margin="12,0">
+
+                        <!-- Section: PLAYER -->
+                        <TextBlock Text="PLAYER" FontSize="9" FontWeight="Bold"
+                                   Foreground="#2A4466" Margin="12,8,8,6"/>
+
+                        <!-- Home -->
+                        <Button x:Name="btnHome" Tag="Home" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border x:Name="iconHome" Width="28" Height="28" CornerRadius="8"
+                                        Background="#1562EFAD" Margin="0,0,10,0">
+                                    <TextBlock Text="🏠" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtHome" Text="Home" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Profile -->
+                        <Button x:Name="btnProfile" Tag="Profile" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#1500B4D8" Margin="0,0,10,0">
+                                    <TextBlock Text="👤" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtProfile" Text="Profile" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Section: GAME -->
+                        <TextBlock Text="GAME" FontSize="9" FontWeight="Bold"
+                                   Foreground="#2A4466" Margin="12,14,8,6"/>
+
+                        <!-- Profiles -->
+                        <Button x:Name="btnProfiles" Tag="Profiles" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#15FF9800" Margin="0,0,10,0">
+                                    <TextBlock Text="🗂️" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtProfiles" Text="Profiles" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Mods -->
+                        <Button x:Name="btnMods" Tag="Mods" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#154CAF50" Margin="0,0,10,0">
+                                    <TextBlock Text="📦" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtMods" Text="Mods" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Modpacks -->
+                        <Button x:Name="btnModpacks" Tag="Modpacks" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#157C4DFF" Margin="0,0,10,0">
+                                    <TextBlock Text="🗃️" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtModpacks" Text="Modpacks" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Console / Logs -->
+                        <Button x:Name="btnConsole" Tag="Logs" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#157C4DFF" Margin="0,0,10,0">
+                                    <TextBlock Text="📋" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtConsole" Text="Console" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Worlds (Coming Soon) -->
+                        <Button IsEnabled="False" Opacity="0.35" Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#10FFFFFF" Margin="0,0,10,0">
+                                    <TextBlock Text="🌍" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="Worlds" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC" Margin="0,0,8,0"/>
+                                <Border Background="#0F62EFAD" BorderBrush="#2062EFAD" BorderThickness="1"
+                                        CornerRadius="4" Padding="5,2" VerticalAlignment="Center">
+                                    <TextBlock Text="SOON" FontSize="8" Foreground="#62EFAD" FontWeight="Bold"/>
+                                </Border>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Section: SYSTEM -->
+                        <TextBlock Text="SYSTEM" FontSize="9" FontWeight="Bold"
+                                   Foreground="#2A4466" Margin="12,14,8,6"/>
+
+                        <!-- Settings -->
+                        <Button x:Name="btnSettings" Tag="Settings" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#15FFFFFF" Margin="0,0,10,0">
+                                    <TextBlock Text="⚙️" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtSettings" Text="Settings" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- About -->
+                        <Button x:Name="btnAbout" Tag="About" Click="MenuButton_Click"
+                                Style="{StaticResource NavItemStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="28" Height="28" CornerRadius="8"
+                                        Background="#15FFFFFF" Margin="0,0,10,0">
+                                    <TextBlock Text="ℹ️" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock x:Name="txtAbout" Text="About" VerticalAlignment="Center"
+                                           FontSize="13" FontWeight="Medium" Foreground="#AABBCC"/>
+                            </StackPanel>
+                        </Button>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer -->
+                <Border Grid.Row="2" BorderThickness="0,1,0,0" Padding="16,14">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="#2062EFAD" Offset="0.5"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Background>
+                        <SolidColorBrush Color="#050810"/>
+                    </Border.Background>
+                    <!-- User info row -->
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                            <Ellipse Width="8" Height="8" Margin="0,0,7,0" VerticalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#62EFAD" Offset="0"/>
+                                        <GradientStop Color="#4CAF50" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                                <Ellipse.Effect>
+                                    <DropShadowEffect BlurRadius="6" Color="#62EFAD" Opacity="0.9" ShadowDepth="0"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+                            <TextBlock Text="All systems online" FontSize="10" Foreground="#62EFAD" FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <TextBlock Text="Nexus Launcher  •  v1.0.3  •  © 2025" FontSize="9" Foreground="#1E3050"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Content Area -->
+        <Frame Name="ContentFrame"
+               Grid.Column="1"
+               NavigationUIVisibility="Hidden"
+               Background="{DynamicResource ApplicationBackgroundBrush}"/>
+    </Grid>
+</Page>
