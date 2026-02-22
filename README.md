@@ -25,6 +25,9 @@
 - ✅ **RAM Allocation** - Configure JVM memory allocation
 - ✅ **Default Reset** - Reset all settings to defaults with one click
 
+<img width="802" height="99" alt="image" src="https://github.com/user-attachments/assets/739cf31a-f3a2-401c-a660-ecd1b6c509ca" />
+
+
 ## 🏗️ Architecture
 
 ### Design Patterns
@@ -160,3 +163,4 @@ Feel free to submit issues and enhancement requests!
 **Last Updated**: 2024
 **Version**: 1.0.0
 **Status**: Production-Ready
+
